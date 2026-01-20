@@ -1,0 +1,14 @@
+{
+  "name": "nvl-widget-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "@anywidget/vite": "^0.2.2",
+    "vite": "^7.2.4"
+  }
+}
