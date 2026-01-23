@@ -1,14 +1,14 @@
 import { createRender } from "@anywidget/react";
-import { Counter } from "./components/Counter";
+import { Graph } from "./components/Graph";
 
-function App() {
+function Widget() {
     return (
-        <div className="counter-widget">
-            <Counter />
+        <div style={{ width: '100%', height: 500 }}>
+            <Graph />
         </div>
     );
 }
 
 export default {
-    render: createRender(App),
+    render: createRender(Widget),
 };

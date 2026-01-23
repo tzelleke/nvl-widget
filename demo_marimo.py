@@ -9,7 +9,7 @@ with app.setup:
 
 @app.cell
 def _():
-    nvl_widget.CounterWidget()
+    nvl_widget.GraphWidget()
     return
 
 
