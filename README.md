@@ -21,7 +21,9 @@ neo4j-nvl-anywidget/
 │           └── Graph.jsx    # Neo4j NVL React component
 └── src/
     └── nvl_widget/
-        └── __init__.py      # Python widget classes
+        ├── __init__.py      # Package exports
+        ├── models.py        # Data classes (Node, Relationship, GraphData)
+        └── widget.py        # GraphWidget class
 ```
 
 ## Dependencies
@@ -115,7 +117,12 @@ _esm = _bundler_output_dir / "index.js"  # Use this for production
 ## Usage Example
 
 ```python
-from nvl_widget import GraphData, GraphWidget, Node, Relationship
+from nvl_widget import (
+   GraphData,
+   GraphWidget,
+   Node,
+   Relationship,
+)
 
 graph_data = GraphData(
     nodes=[
