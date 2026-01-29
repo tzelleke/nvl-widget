@@ -2,8 +2,8 @@ import { useModelState } from "@anywidget/react";
 import { BasicNvlWrapper } from "@neo4j-nvl/react";
 
 export function Graph() {
-    const [nodes] = useModelState("nodes");
-    const [rels] = useModelState("rels");
+    const [graphData] = useModelState("graph_data");
+    const { nodes = [], rels = [] } = graphData ?? {};
 
     return (
         <BasicNvlWrapper

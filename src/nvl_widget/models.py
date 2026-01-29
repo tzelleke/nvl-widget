@@ -38,3 +38,19 @@ class GraphData:
             "nodes": [asdict(n) for n in self.nodes],
             "rels": [r.to_dict() for r in self.rels],
         }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "GraphData":
+        """Reconstruct GraphData from a dict (e.g., from JSON)."""
+        nodes = [Node(**n) for n in data.get("nodes", [])]
+        rels = [
+            Relationship(
+                id=r["id"],
+                from_=r["from"],
+                to=r["to"],
+                caption=r.get("caption"),
+                color=r.get("color"),
+            )
+            for r in data.get("rels", [])
+        ]
+        return cls(nodes=nodes, rels=rels)
