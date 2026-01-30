@@ -22,7 +22,7 @@ neo4j-nvl-anywidget/
 └── src/
     └── nvl_widget/
         ├── __init__.py      # Package exports
-        ├── models.py        # Data classes (Node, Relationship, GraphData)
+        ├── models.py        # Pydantic models (Node, Relationship, GraphData)
         └── widget.py        # GraphWidget class
 ```
 
@@ -31,6 +31,7 @@ neo4j-nvl-anywidget/
 ### Python Dependencies
 
 - `anywidget` - Framework for creating custom Jupyter/Marimo widgets
+- `pydantic` - Data validation using Python type annotations
 - `traitlets` - Configuration system for Python applications
 
 ### Frontend Dependencies
@@ -140,6 +141,8 @@ widget
 
 ## API Reference
 
+All models are [Pydantic](https://docs.pydantic.dev/) `BaseModel` subclasses, providing automatic validation and serialization.
+
 ### `Node`
 
 - `id` (str): Unique identifier
@@ -150,7 +153,7 @@ widget
 ### `Relationship`
 
 - `id` (str): Unique identifier
-- `from_` (str): Source node ID (note the underscore to avoid Python keyword conflict)
+- `from_` (str): Source node ID (note the underscore to avoid Python keyword conflict; serializes as `"from"`)
 - `to` (str): Target node ID
 - `caption` (str, optional): Relationship label
 - `color` (str, optional): Hex color code

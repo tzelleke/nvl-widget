@@ -10,14 +10,14 @@ def _graph_data_to_json(value: GraphData | None, widget) -> dict | None:
     """Serialize GraphData to JSON for frontend sync."""
     if value is None:
         return None
-    return value.to_dict()
+    return value.model_dump(by_alias=True)
 
 
 def _graph_data_from_json(value: dict | None, widget) -> GraphData | None:
     """Deserialize JSON to GraphData from frontend sync."""
     if value is None:
         return None
-    return GraphData.from_dict(value)
+    return GraphData.model_validate(value)
 
 
 _bundler_output_dir = pathlib.Path(__file__).parent.parent / "static"
