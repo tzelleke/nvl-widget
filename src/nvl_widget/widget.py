@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pathlib
+from collections.abc import Callable
 from typing import Self
 
 import anywidget
@@ -42,6 +43,9 @@ class GraphWidget(anywidget.AnyWidget):
         to_json=_graph_data_to_json,
         from_json=_graph_data_from_json,
     )
+
+    selected_nodes: list[str] = traitlets.List(traitlets.Unicode()).tag(sync=True)  # type: ignore[assignment]
+    selected_rels: list[str] = traitlets.List(traitlets.Unicode()).tag(sync=True)  # type: ignore[assignment]
 
     def __init__(self, graph_data: GraphData | None = None, **kwargs):
         """Initialize the widget.
@@ -130,3 +134,40 @@ class GraphWidget(anywidget.AnyWidget):
         )
 
         return nodes_df, rels_df
+
+    def select_nodes(self, node_ids: list[str]) -> None:
+        """Select nodes by their IDs.
+
+        Args:
+            node_ids: List of node IDs to select.
+        """
+        self.selected_nodes = node_ids
+
+    def select_rels(self, rel_ids: list[str]) -> None:
+        """Select relationships by their IDs.
+
+        Args:
+            rel_ids: List of relationship IDs to select.
+        """
+        self.selected_rels = rel_ids
+
+    def clear_selection(self) -> None:
+        """Clear all selections."""
+        self.selected_nodes = []
+        self.selected_rels = []
+
+    def on_selection_change(
+        self,
+        callback: Callable[[list[str], list[str]], None],
+    ) -> None:
+        """Register a callback for selection changes.
+
+        Args:
+            callback: Function called with (selected_nodes, selected_rels)
+                when selection changes.
+        """
+
+        def handler(change: dict) -> None:
+            callback(self.selected_nodes, self.selected_rels)
+
+        self.observe(handler, names=["selected_nodes", "selected_rels"])

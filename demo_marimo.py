@@ -42,6 +42,13 @@ def _():
 def _(nodes_df, rels_df):
     widget = GraphWidget.from_dataframes(nodes_df, rels_df)
     widget
+    return (widget,)
+
+
+@app.cell
+def _(widget):
+    # Selection state is reactive - click nodes/rels in the graph to see changes
+    f"Selected nodes: {widget.selected_nodes}, Selected rels: {widget.selected_rels}"
     return
 
 
