@@ -4,38 +4,43 @@ __generated_with = "0.19.4"
 app = marimo.App(width="medium")
 
 with app.setup:
-    from nvl_widget import (
-        GraphData,
-        GraphWidget,
-        Node,
-        Relationship,
-    )
+    import pandas as pd
+
+    from nvl_widget import GraphWidget
 
 
 @app.cell
 def _():
-    graph_data = GraphData(
-        nodes=[
-            Node(id="1", caption="Alice", color="#ffdf81", size=20),
-            Node(id="2", caption="Bob", color="#81caff", size=20),
-            Node(id="3", caption="Charlie", color="#a1ff81", size=20),
-            Node(id="4", caption="Diana", color="#ff81bf", size=20),
-        ],
-        rels=[
-            Relationship(id="r1", from_="1", to="2", caption="KNOWS"),
-            Relationship(id="r2", from_="1", to="3", caption="KNOWS"),
-            Relationship(id="r3", from_="2", to="3", caption="WORKS_WITH"),
-            Relationship(id="r4", from_="2", to="4", caption="KNOWS"),
-            Relationship(id="r5", from_="3", to="4", caption="FRIENDS"),
-            Relationship(id="r6", from_="4", to="1", caption="FOLLOWS"),
-        ],
+    nodes_df = pd.DataFrame(
+        {
+            "id": ["1", "2", "3", "4"],
+            "caption": ["Alice", "Bob", "Charlie", "Diana"],
+            "color": ["#ffdf81", "#81caff", "#a1ff81", "#ff81bf"],
+            "size": [20, 20, 20, 20],
+        }
     )
-    return (graph_data,)
+
+    rels_df = pd.DataFrame(
+        {
+            "id": ["r1", "r2", "r3", "r4", "r5", "r6"],
+            "from": ["1", "1", "2", "2", "3", "4"],
+            "to": ["2", "3", "3", "4", "4", "1"],
+            "caption": [
+                "KNOWS",
+                "KNOWS",
+                "WORKS_WITH",
+                "KNOWS",
+                "FRIENDS",
+                "FOLLOWS",
+            ],
+        }
+    )
+    return nodes_df, rels_df
 
 
 @app.cell
-def _(graph_data):
-    widget = GraphWidget(graph_data=graph_data)
+def _(nodes_df, rels_df):
+    widget = GraphWidget.from_dataframes(nodes_df, rels_df)
     widget
     return
 
