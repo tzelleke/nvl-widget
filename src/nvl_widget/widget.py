@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pathlib
 
 import anywidget
@@ -24,6 +26,8 @@ _bundler_output_dir = pathlib.Path(__file__).parent.parent / "static"
 
 
 class GraphWidget(anywidget.AnyWidget):
+    """Widget for visualizing graph data using Neo4j NVL."""
+
     # _esm = _bundler_output_dir / "index.js"
     _esm = "http://localhost:5173/src/index.jsx?anywidget"
 
@@ -34,5 +38,11 @@ class GraphWidget(anywidget.AnyWidget):
     )
 
     def __init__(self, graph_data: GraphData | None = None, **kwargs):
+        """Initialize the widget.
+
+        Args:
+            graph_data: The graph data to visualize.
+            **kwargs: Additional keyword arguments passed to the parent class.
+        """
         kwargs.setdefault("graph_data", graph_data)
         super().__init__(**kwargs)

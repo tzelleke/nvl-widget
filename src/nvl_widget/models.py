@@ -1,4 +1,9 @@
-from pydantic import BaseModel, Field
+from __future__ import annotations
+
+from pydantic import (
+    BaseModel,
+    Field,
+)
 
 
 class Node(BaseModel):
